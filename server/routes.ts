@@ -58,6 +58,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/products', async (req: Request, res: Response) => {
     try {
       const productData = insertProductSchema.parse(req.body);
+      console.log(productData);
       const product = await storage.createProduct(productData);
       res.status(201).json(product);
     } catch (error) {
