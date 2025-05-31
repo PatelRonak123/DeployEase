@@ -51,11 +51,22 @@ app.use((req, res, next) => {
   // importantly only setup vite in development and after
   // setting up all the other routes so the catch-all route
   // doesn't interfere with the other routes
-  if (app.get("env") === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
-  }
+  // if (app.get("env") === "development") {
+  //   await setupVite(app, server);
+  // } else {
+  //   serveStatic(app);
+  // }
+
+  const isDev = process.env.NODE_ENV !== "production";
+
+if (isDev) {
+  console.log("Starting Vite in DEV mode");
+  await setupVite(app, server);
+} else {
+  console.log("Serving static build");
+  serveStatic(app);
+}
+
 
   // ALWAYS serve the app on port 5000
   // this serves both the API and the client.
